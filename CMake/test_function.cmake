@@ -1,0 +1,11 @@
+function(GenerateExcludedStaticLibs output_var)
+    message("input: ${output_var}")
+    set(static_libs_to_exclude)
+    foreach(lib IN LISTS ARGN)
+        message("${lib}")
+        list(APPEND static_libs_to_exclude "-Wl,--exclude-libs,${lib}")
+    endforeach()
+
+    string (REPLACE ";" " " static_libs_to_exclude "${static_libs_to_exclude}")
+    set(${output_var} ${static_libs_to_exclude} PARENT_SCOPE)
+endfunction()
